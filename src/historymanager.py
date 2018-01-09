@@ -62,5 +62,5 @@ class HistoryManager(object):
 			name (string): name of a coin
 		"""
 
-		open(self.data_path+name, 'a').close()
+		open(self.data_path+name+'.csv', 'a').close()
 		self.update()

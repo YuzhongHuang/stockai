@@ -1,3 +1,4 @@
 pytorch_testground/
-database/*
+rawdata/*
+processeddata/*
 *.pyc
