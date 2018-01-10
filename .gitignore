@@ -1,4 +1,4 @@
 pytorch_testground/
 rawdata/*
-processeddata/*
+trainabledata/*
 *.pyc

@@ -15,3 +15,8 @@ class PGPNet(nn.Module):
 		x = self.conv3(F.relu(self.conv2(F.relu(self.conv1(input)))))
 		x = x.view(x.size(0), -1)
 		return x
+
+net = PGPNet()
+input = Variable(torch.randn(1, 3, 50))
+out = net(input)
+print(out)
