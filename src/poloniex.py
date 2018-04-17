@@ -21,6 +21,8 @@ year = day*365
 PUBLIC_COMMANDS = ['returnTicker', 'return24hVolume', 'returnOrderBook', 'returnTradeHistory', 'returnChartData', 'returnCurrencies', 'returnLoanOrders']
 
 class Poloniex:
+    """API for poloniex 
+    """
     def __init__(self, APIKey='', Secret=''):
         self.APIKey = APIKey.encode()
         self.Secret = Secret.encode()
