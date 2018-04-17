@@ -3,6 +3,9 @@ from torch.autograd import Variable
 import torch.nn as nn
 import torch.nn.functional as F
 
+#------------------------#
+# attempt to combine volumn and price in the model, not successful
+#------------------------#
 # class PGPNet(nn.Module):
 
 # 	def __init__(self, feature_length):
@@ -26,6 +29,8 @@ import torch.nn.functional as F
 # 		return output
 
 class PGPNet(nn.Module):
+	"""A simple convnet predictor 
+	"""
 
 	def __init__(self, feature_length):
 		super(PGPNet, self).__init__()
