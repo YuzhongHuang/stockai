@@ -15,16 +15,16 @@ month = day*30
 year = day*365
 
 def get_test_data(coin_name, end_time, trading_period, feature_length):
-	start_time = end_time - trading_period * feature_length * minute
+	print("Downloading " + coin_name + " test data")
 
 	args = {}
 	args["currencyPair"] = "USDT_" + coin_name
 	command = "returnTradeHistory"
 
+	start_time = end_time - trading_period * feature_length * minute
 	args["start"] = start_time
 	args["end"] = end_time
 
-	print("getting test data of " + coin_name)
 	df = get_data_until_success(command, args)
 	return df
 
