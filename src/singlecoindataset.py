@@ -21,14 +21,18 @@ class SingleCoinDataset(Dataset):
     def __init__(self, data, transform=ToTensor()):
         self.data = data
         self.transform = transform
-
+        ###############################
+        # need to make the multiply factor an argument
+        ###############################    
         price_feature_normalize = lambda x: x*150
         self.data["price_feature"] = self.data["price_feature"].apply(price_feature_normalize)
 
         std = (self.data["volumn_feature"].as_matrix()).reshape(-1).std()
         volumn_feature_normalize = lambda x: x/std
         self.data["volumn_feature"] = self.data["volumn_feature"].apply(volumn_feature_normalize)
-
+        ###############################
+        # need to make the multiply factor an argument
+        ###############################
         target_normalize = lambda x: torch.sigmoid(torch.from_numpy(np.array([150*x])))
         self.data["target"] = self.data["target"].apply(target_normalize)
         self.data = self.data.drop('volumn_feature', axis=1)

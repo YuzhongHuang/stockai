@@ -17,10 +17,15 @@ def test_accuracy(coin_name, start_time, end_time, size):
 	start_time, end_time: time in linux timestamp
 	size: number of tests in total
 	"""
-	correct = 0	# keep track of number of correct predictions
+
+	# positive/negative variable for confusion matrix
+	pos_pos = 0
+	pos_neg = 0
+	neg_pos = 0
+	neg_neg = 0
 
 	for i in range(size):
-		print("Iteration "+str(i))
+		print("Iteration "+str(i+1))
 		# pick a random time from the given time period to conduct a test
 		# note that result in target is sigmoid(price_t/price_t-1 - 1)
 		time_chosen = random.randint(start_time, end_time)
@@ -31,12 +36,21 @@ def test_accuracy(coin_name, start_time, end_time, size):
 
 		# prediction is considered as correct if the predicted indicator is align with the target
 		# indicator above 0.5 indicates a rise and indicator below 0.5 indicates a fall
-		if ((target>0.5) and (pred>0.5)) or ((target<0.5) and (pred<0.5)):
-			correct += 1
+		if (target>0.5) and (pred>0.5):
+			pos_pos += 1
+		if (target>0.5) and (pred<0.5):
+			pos_neg += 1
+		if (target<0.5) and (pred>0.5):
+			neg_pos += 1
+		if (target<0.5) and (pred<0.5):
+			neg_neg += 1
 
-		print(str(correct)+" correct out of "+str(i+1))
+		# print a confusion matrix
+		confusion_mat(pos_pos, pos_neg, neg_pos, neg_neg)
+		# print accuracy
+		print("Accuracy: " + str(float(pos_pos+neg_neg)/(i+1)))
 
-	return (correct/size)
+	return float(pos_pos+neg_neg)/size
 
 def get_target(coin_name, time_chosen):
 	# download actual trading data of the test time
@@ -64,5 +78,22 @@ def get_target(coin_name, time_chosen):
 
 	return target
 
-print("Total accuracy: ")
-print(test_accuracy("LTC", 1523493950, 1523993950, 100))
+def confusion_mat(pos_pos, pos_neg, neg_pos, neg_neg):
+	pos_pos = string_format(pos_pos)
+	pos_neg = string_format(pos_neg)
+	neg_pos = string_format(neg_pos)
+	neg_neg = string_format(neg_neg)
+	print("     -rise-fall-")
+	print("     -----------")
+	print("rise | "+pos_pos+" | "+pos_neg+" |")
+	print("     -----------")
+	print("fall | "+neg_pos+" | "+neg_neg+" |")
+	print("     -----------")
+
+def string_format(i):
+	s = str(i)
+	if len(s)<2:
+		s += " "
+	return s
+
+print(test_accuracy("LTC", 1523493950, 1524003950, 100))

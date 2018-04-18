@@ -19,6 +19,8 @@ def get_trained_net(dataset, hyper_param, market_param, cuda=False):
     criterion = nn.BCELoss()
     optimizer = optim.SGD(net.parameters(), lr=hyper_param["lr"], momentum=hyper_param["momentum"]) 
 
+    print("Start training for " +str(hyper_param["epoch"])+ " epochs")
+
     for epoch in range(hyper_param["epoch"]):  # loop over the dataset multiple times
         running_loss = 0.0
         for i, data in enumerate(trainloader, 0):
